@@ -5,6 +5,18 @@
   --pixel-size: 8px;
 }
 
+@media (max-width: 1440px){
+  *{
+    --pixel-size: 6px;
+  }
+}
+
+@media (max-width: 1440px){
+  *{
+    --pixel-size: 6px;
+  }
+}
+
 body{
   display: flex;
   align-items: center;
@@ -66,9 +78,20 @@ p {
   width: 100%;
 }
 
-.hidden {
-  display: none;
+.enemys {
+  width: calc(1.5*var(--grid-cell));
+  height: calc(2*var(--grid-cell));
 }
+
+.animation{
+  transition: transform 1s ease;
+}
+
+.enemys img {
+  width: 80%;
+  height: 100%;
+}
+
 
 .character img {
   width: 100%;
@@ -100,8 +123,17 @@ p {
   color: rgb(0, 230, 96);
 }
 
+#spear {
+  width: calc(2*var(--grid-cell));
+}
+
+#spear img {
+ width: 100%;
+}
+
 #logo {
   position: absolute;
   z-index: -1;
 }
+
 
