@@ -1,3 +1,80 @@
-body {
-  background-color: red;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --pixel-size: 8px;
 }
+
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: "Chakra Petch", sans-serif;
+}
+
+#game-board {
+  border-radius: 100px;
+  display: grid;
+  --grid-cell: calc(var(--pixel-size) * 16);
+}
+
+.camera {
+  width: calc(var(--pixel-size)*192);
+  height: calc(var(--pixel-size)*108);
+  overflow: hidden;
+  position: relative;
+}
+
+.map {
+  background: url(assets/image.jpeg);
+  background-size: cover;
+  width: calc(13*var(--grid-cell));
+  height: calc(10*var(--grid-cell));
+  position: relative;
+}
+
+
+.character{
+  width: calc(1.5*var(--grid-cell));
+  height: calc(1.5*var(--grid-cell));
+  position: absolute;
+}
+
+.hidden {
+  display: none;
+}
+
+.character img {
+  width: 100%;
+}
+
+.game-border {
+  border: rgb(0, 230, 96) solid 10px;
+  border-radius: 10px;
+}
+
+#instruction-text {
+  position: absolute;
+  top: 60%;
+  text-align: center;
+  border: 10px solid rgb(0, 230, 96);
+  border-radius: 10px;
+  background-color: white;
+  padding: 10px;
+}
+
+.scores{
+  display: flex;
+  justify-content: space-between;
+}
+
+#score{
+  color: rgb(0, 230, 96);
+}
+
+#logo {
+  position: absolute;
+  z-index: -1;
+}
+
