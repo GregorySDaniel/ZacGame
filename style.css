@@ -13,6 +13,10 @@ body{
   font-family: "Chakra Petch", sans-serif;
 }
 
+p {
+  color: white;
+}
+
 #game-board {
   border-radius: 100px;
   display: grid;
@@ -37,8 +41,25 @@ body{
 
 .character{
   width: calc(1.5*var(--grid-cell));
-  height: calc(1.5*var(--grid-cell));
+  height: calc(2*var(--grid-cell));
   position: absolute;
+
+}
+
+.hud{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.blobs {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+}
+
+.blobs img {
+  width: 100%;
 }
 
 .hidden {
@@ -47,6 +68,8 @@ body{
 
 .character img {
   width: 100%;
+  height: 100%;
+
 }
 
 .game-border {
