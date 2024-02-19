@@ -56,8 +56,6 @@ function placeBlobs () {
 
 const step = () => {
   placeCharacter();
-  console.log(`Gosma X: ${bloobX} Gosma Y: ${bloobY}`)
-  console.log(`Personagem X: ${characterX} Personagem Y: ${characterY}`)
   if (Math.abs(bloobX-characterX) <= 12 && Math.abs(bloobX-characterX)>=4 && (bloobY - characterY) >= 18 && (bloobY - characterY) <= 28) { 
     placeBlobs(); 
     updateScore();

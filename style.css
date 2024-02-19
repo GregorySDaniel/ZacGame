@@ -43,14 +43,18 @@ p {
   width: calc(1.5*var(--grid-cell));
   height: calc(2*var(--grid-cell));
   position: absolute;
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .hud{
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: calc(1.2*var(--grid-cell));
 }
+
 
 .blobs {
   position: absolute;
