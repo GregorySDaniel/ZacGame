@@ -1,22 +1,27 @@
-
+var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
 var character = document.querySelector(".character");
+var blobs = document.querySelector(".blobs");
 var map = document.querySelector(".map");
+var score = document.getElementById('score');
 
-const characterImg = document.querySelector('.character img');
+const characterImg = document.querySelector('.characterImage img');
 
-var x = 6.5;
-var y = 5;
+var characterX = 0;
+var characterY = 0;
+var bloobX = 0;
+var bloobY = 0;
+var currentScore = 0;
 
 var held_directions = [];
 
-var speed = 0.5;
+var speed = .7;
 
 
 const directions = {
   up: "up",
   down: "down",
   left: "left",
-  right: "right"
+  right: "right",
 };
 
 const keys = {
@@ -27,33 +32,44 @@ const keys = {
 }
 
 const placeCharacter = () => {
-  var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
   const held_direction = held_directions[0];
   if (held_direction) {
     if (held_direction === directions.right) {
-      x += speed; 
+      characterX += speed; 
       characterImg.src = 'assets/rightZac.png';}
     if (held_direction === directions.left) {
-      x -= speed;
+      characterX -= speed;
       characterImg.src = 'assets/leftZac.png';}
-    if (held_direction === directions.down) {y += speed;}
-    if (held_direction === directions.up) {y -= speed;}
+    if (held_direction === directions.down) {characterY += speed;}
+    if (held_direction === directions.up) {characterY -= speed;}
     character.setAttribute("facing", held_direction);
   }
-
-
-
   character.setAttribute("walking", held_direction ? "true" : "false");
+  character.style.transform = `translate3d( ${characterX*pixelSize}px, ${characterY*pixelSize}px, 0)`
+}
 
-  character.style.transform = `translate3d( ${x*pixelSize}px, ${y*pixelSize}px, 0)`
-  
+function placeBlobs () {
+  bloobX = Math.floor(Math.random() * 170);
+  bloobY = 12 + Math.floor(Math.random() * 80);
+  blobs.style.transform = `translate3d( ${bloobX*pixelSize}px, ${bloobY*pixelSize}px, 0)`
 }
 
 const step = () => {
   placeCharacter();
+  console.log(`Gosma X: ${bloobX} Gosma Y: ${bloobY}`)
+  console.log(`Personagem X: ${characterX} Personagem Y: ${characterY}`)
+  if (Math.abs(bloobX-characterX) <= 12 && Math.abs(bloobX-characterX)>=4 && (bloobY - characterY) >= 18 && (bloobY - characterY) <= 28) { 
+    placeBlobs(); 
+    updateScore();
+  }
   window.requestAnimationFrame(()=> {
     step();
   })
+}
+
+function updateScore(){
+  currentScore++;
+  score.textContent = currentScore.toString().padStart(3, '0');
 }
 
 document.addEventListener("keydown", (e) => {
@@ -72,3 +88,4 @@ document.addEventListener("keyup", (e) => {
 })
 
 step();
+placeBlobs();
