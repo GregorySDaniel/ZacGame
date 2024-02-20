@@ -5,8 +5,10 @@ var enemys = document.querySelector(".enemys");
 var map = document.querySelector(".map");
 var spear = document.getElementById('spear');
 var score = document.getElementById('score');
-
+var nickname = document.getElementById('nickname');
 const characterImg = document.querySelector('.characterImage img');
+const menu = document.querySelector(".menu");
+var gameRunning = false;
 
 var characterX = 80;
 var characterY = 30;
@@ -56,6 +58,7 @@ const placeCharacter = () => {
 }
 
 function placeBlobs () {
+  if (!gameRunning) return;
   bloobX = Math.floor(Math.random() * 170);
   bloobY = 12 + Math.floor(Math.random() * 80);
   blobs.style.transform = `translate3d( ${bloobX*pixelSize}px, ${bloobY*pixelSize}px, 0)`
@@ -63,7 +66,8 @@ function placeBlobs () {
 
 const step = () => {
   placeCharacter();
-  // console.log(`Personagem Y= ${characterY}`);
+  
+  if(!gameRunning) return;
 
   window.requestAnimationFrame(()=> {
     step();
@@ -75,7 +79,7 @@ const step = () => {
     if (Math.abs(spearX-characterX) < 2 && Math.abs(spearY-characterY)<10)  {
       console.log("pegou");
       character.classList.toggle('color');
-      return;
+      gameRunning = false;
     }
   })
 }
@@ -86,6 +90,7 @@ function updateScore(){
 }
 
 function enemySlide(){
+  if (!gameRunning) return;
   setTimeout(() => {
     utilY = enemyY;
     enemys.classList.add('animation');
@@ -100,6 +105,7 @@ function enemySlide(){
 }
 
 function throwSkill(utilY){
+  if (!gameRunning) return;
   // console.log(utilY)
   // console.log(enemyY)
   spear.classList.add('spear-animation');
@@ -108,6 +114,7 @@ function throwSkill(utilY){
   let x = ((enemyY-20)-spearY)/100;
   spear.style.transform = `translate3d( ${(250+enemyX)*pixelSize}px, ${(enemyY-20)*pixelSize}px, 0)`
   for(let i=0; i<100; i++){
+    if (!gameRunning) return;
     setTimeout(()=>{
       spearX += 3;
       spearY += x;
@@ -126,6 +133,7 @@ function throwSkill(utilY){
 
 
 function enemyAppear(){
+  if (!gameRunning) return;
   enemyX = -25;
   enemyY = Math.floor(Math.random() * 70);
   enemys.style.transform = `translate3d( ${enemyX*pixelSize}px, ${enemyY*pixelSize}px, 0)`
@@ -147,6 +155,11 @@ document.addEventListener("keyup", (e) => {
   }
 })
 
-step();
-placeBlobs();
-enemyAppear();
+function startGame(){
+  gameRunning = true;
+  menu.classList.add('hidden');
+  placeBlobs();
+  enemyAppear();
+  step();
+}
+
