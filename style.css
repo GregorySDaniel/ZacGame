@@ -11,6 +11,9 @@ body{
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+body, input, button {
   font-family: "Chakra Petch", sans-serif;
 }
 
@@ -94,6 +97,49 @@ p {
 
 .color {
   background-color: red;
+}
+
+.menu {
+  position: absolute;
+  top: 100px;
+  right: 650px;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: url(assets/Zac_0.jpg);
+  background-size: auto;
+  gap: 10px;
+  padding: 200px 40px;
+  border: rgb(0, 230, 96) solid 10px;
+  border-radius: 2px;
+}
+
+.menu h1 {
+  color: white;
+  font-size: 64px;
+  margin-bottom: -20px;
+}
+
+.menu input {
+  padding: 4px;
+  width: 300px;
+  height: 40px;
+  border: rgb(0, 230, 96) solid 3px;
+}
+
+.menu form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.menu button {
+  padding: 12px;
+  font-size: 16px;
+  border: rgb(0, 230, 96) solid 3px;
+  width: 300px;
 }
 
 .game-border {
