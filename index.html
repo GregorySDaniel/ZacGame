@@ -21,35 +21,53 @@
           <div id="game-board">
               <div class="camera">
                 <div class="map">
-                  <div class="menu">
+                  <div class="menu start">
                     <h1>Zac Game</h1>
                     <p>Collect blobs and avoid skillshots</p>
-                      <input id="nickname" placeholder="Enter your Nickname" type="text">
+                      <input id="nickname" autocomplete="off" placeholder="Enter your Nickname" type="text">
                       <button onclick="startGame()" id="start-button">Play</button>
                   </div>
-                  <div class="blobs">
-                    <img src="assets/blobs.png" alt="Zac blobs">
+                  <div class="menu end hidden">
+                    <h1>You died xd</h1>
+                    <p>Your score: 000</p>
+                    <button id="restartButton" class="hidden" onclick="resetGame()">Play Again</button>
                   </div>
-                  <div class="character">
-                    <div class="hud">
-                      <p>Undebal</p>
-                      <img src="assets/hud.png" alt="Player interface">
-                    </div>
-                    <div class="characterImage">
-                      <img id="rightCharacter" src="assets/rightZac.png" alt="Zac">
-                    </div>
-                  </div>
-                  <div class="enemys">
-                    <div class="hud">
-                      <p>尼达利</p>
-                      <img src="assets/hud.png" alt="Player interface">
-                    </div>
-                    <img src="assets/nidalee.png" alt="Nidalee">
-                  </div>
-                  <div class="skills">
-                    <div id="spear">
-                      <img src="assets/nidaleeSpear.png" alt="Nidalee Spear">
-                    </div>
+                  <div class="game-elements">
+                      <div class="blobs">
+                        <img src="assets/blobs.png" alt="Zac blobs">
+                      </div>
+                      <div class="character">
+                        <div class="hud player">
+                          <p>Undebal</p>
+                          <img src="assets/hud.png" alt="Player interface">
+                        </div>
+                        <div class="characterImage">
+                          <img id="rightCharacter" src="assets/rightZac.png" alt="Zac">
+                        </div>
+                      </div>
+                      <div class="smoke">
+                        <img src="assets/gravesSmoke.PNG" alt="Graves Smoke">
+                      </div>
+                        <div class="nidalee">
+                          <div class="hud">
+                            <p>尼达利</p>
+                            <img src="assets/enemyhud.PNG" alt="Player interface">
+                          </div>
+                          <img src="assets/nidalee.png" alt="Nidalee">
+                        </div>
+                          <div class="spear">
+                            <img src="assets/nidaleeSpear.png" alt="Nidalee Spear">
+                          </div>
+                        <div class="graves">
+                          <div class="hud">
+                            <p>尼达利</p>
+                            <img src="assets/enemyhud.PNG" alt="Player interface">
+                          </div>
+                          <img src="assets/Graves.png" alt="Graves">
+                        </div>
+                        <div class="shot hidden">
+                          <img src="assets/shot.png" alt="Graves shot">
+                        </div>
                   </div>
                 </div>
               </div>
