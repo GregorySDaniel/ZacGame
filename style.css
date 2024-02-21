@@ -8,9 +8,11 @@
 
 body{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  scroll-behavior: auto;
+  gap: 100px;
 }
 
 body, input, button {
@@ -70,7 +72,7 @@ p {
   width: 100%;
 }
 
-.enemys {
+.nidalee, .graves {
   width: calc(1.5*var(--grid-cell));
   height: calc(2*var(--grid-cell));
 }
@@ -80,10 +82,10 @@ p {
 }
 
 .spear-animation {
-  transition: transform 1.2s linear;
+  transition: transform 0.6s linear;
 }
 
-.enemys img {
+.nidalee img {
   width: 80%;
   height: 100%;
 }
@@ -96,7 +98,7 @@ p {
 }
 
 .color {
-  background-color: red;
+  background: red;
 }
 
 .menu {
@@ -114,6 +116,7 @@ p {
   padding: 200px 40px;
   border: rgb(0, 230, 96) solid 10px;
   border-radius: 2px;
+  z-index: 999;
 }
 
 .menu h1 {
@@ -170,11 +173,11 @@ p {
   display: none;
 }
 
-#spear {
+.spear {
   width: calc(2*var(--grid-cell));
 }
 
-#spear img {
+.spear img {
  width: 100%;
 }
 
@@ -183,4 +186,47 @@ p {
   z-index: -1;
 }
 
+.graves {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+}
+
+.graves img {
+  width: 100%;
+}
+
+#smoke {
+  z-index: -1;
+}
+
+.character, .nidalee, .graves {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.spear {
+  position: absolute;
+  top: calc(var(--pixel-size)*20);
+  left: calc(var(--pixel-size)*(-18));
+}
+
+.smoke{
+  position: absolute;
+  top: calc(var(--pixel-size)*20);
+  left: calc(var(--pixel-size)*(-4));
+}
+
+.blobs{
+  position: absolute;
+  top: calc(var(--pixel-size)*28);
+  left: calc(var(--pixel-size)*8);
+}
+
+.shot{
+  position: absolute;
+  top: calc(var(--pixel-size)*30);
+  left: calc(var(--pixel-size)*12);
+}
