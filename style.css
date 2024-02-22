@@ -42,6 +42,7 @@ p {
   width: calc(13*var(--grid-cell));
   height: calc(10*var(--grid-cell));
   position: relative;
+  transition: filter 0.4s;
 }
 
 
@@ -229,4 +230,8 @@ p {
   position: absolute;
   top: calc(var(--pixel-size)*30);
   left: calc(var(--pixel-size)*12);
+}
+
+.dark {
+  filter: brightness(3%);
 }
