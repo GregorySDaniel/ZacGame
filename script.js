@@ -13,7 +13,7 @@ var nickname = document.getElementById('nickname');
 const characterImg = document.querySelector('.characterImage img');
 const menu = document.querySelector(".menu");
 const nick = document.querySelector('.hud.player p');
-var gameRunning = false;
+var isGameRunning = false;
 var end = document.querySelector(".end");
 var scoreUser = end.querySelector("p");
 var restartButton = document.getElementById('restartButton');
@@ -34,6 +34,7 @@ var spearY = 0;
 var utilY = 0;
 var currentScore = 0;
 var maxScore = 0;
+var isSmoke = false;
 
 var held_directions = [];
 
@@ -55,32 +56,43 @@ const keys = {
 }
 
 const placeCharacter = () => {
-  const held_direction = held_directions[0];
-  if (held_direction) {
-    if (held_direction === directions.right) {
-      if(characterX>=175){ return; }
-      characterX += speed;
-      characterImg.src = 'assets/rightZac.png';}
-    if (held_direction === directions.left) {
-      if(characterX<=-5){ return; }
-      characterX -= speed;
-      characterImg.src = 'assets/leftZac.png';}
-    if (held_direction === directions.down) {
-      if(characterY>=75){ return; }
-      characterY += speed;
-    }
-    if (held_direction === directions.up) {
-      if(characterY<=-12){ return; }
-      characterY -= speed;
-    }
-    character.setAttribute("facing", held_direction);
+  if (held_directions.length>1){
+    speed = .5;
   }
-  character.setAttribute("walking", held_direction ? "true" : "false");
+  if (held_directions.length>0) {
+    let newX = characterX;
+  let newY = characterY;
+
+  if (held_directions.includes('right')) {
+    newX += speed;
+    characterImg.src = 'assets/rightZac.png';
+  }
+  if (held_directions.includes('left')) {
+    newX -= speed;
+    characterImg.src = 'assets/leftZac.png';
+  }
+  if (held_directions.includes('down')) {
+    newY += speed;
+  }
+  if (held_directions.includes('up')) {
+    newY -= speed;
+  }
+
+  if (newX >= -5 && newX <= 175 && newY >= -12 && newY <= 75) {
+    characterX = newX;
+    characterY = newY;
+    character.setAttribute("walking", "true");
+  } else {
+    character.setAttribute("walking", "false");
+  }
+}
+
+  character.setAttribute("walking", held_directions.length>0 ? "true" : "false");
   character.style.transform = `translate3d( ${characterX*pixelSize}px, ${characterY*pixelSize}px, 0)`
 }
 
 function placeBlobs () {
-  if (!gameRunning) return;
+  if (!isGameRunning) return;
   bloobX = Math.floor(Math.random() * 150);
   bloobY = 12 + Math.floor(Math.random() * 60);
   blobs.style.transform = `translate3d( ${bloobX*pixelSize}px, ${bloobY*pixelSize}px, 0)`
@@ -88,10 +100,9 @@ function placeBlobs () {
 
 const step = () => {
   placeCharacter();
-    console.log(`Personagem X: ${characterX} Personagem Y: ${characterY}`)
-    console.log(`Smoke X: ${smokeX} Smoke Y: ${smokeY}`)
+    console.log(held_directions);
   
-  if(!gameRunning) return;
+  if(!isGameRunning) return;
 
   window.requestAnimationFrame(()=> {
     step();
@@ -103,15 +114,22 @@ const step = () => {
     if (Math.abs(spearX-characterX) < 2 && Math.abs(spearY-characterY)<10)  {
       scoreUser.textContent = `Your score: ${currentScore}`;
       end.classList.remove('hidden');
-      gameRunning = false;
+      isGameRunning = false;
+      map.classList.remove('dark') 
       setTimeout(()=> {
         restartButton.classList.remove('hidden');
       }, 3000);
     }
 
-    if (Math.abs(smokeX-characterX) <= 12 && Math.abs(smokeY - characterY) <= 12) {
-      character.classList.toggle('color');
+    if (Math.abs(smokeX-characterX) <= 12 && Math.abs(smokeY - characterY) <= 12 && isGameRunning) {
+        map.classList.add('dark')
+        speed = .5;
+    } else {
+      speed = .7;
+      map.classList.remove('dark') 
     }
+
+
   })
 }
 
@@ -121,7 +139,7 @@ function updateScore(){
 }
 
 function nidaleeSlide(){
-  if (!gameRunning) return;
+  if (!isGameRunning) return;
   setTimeout(() => {
     utilY = nidaleeY;
     nidalee.classList.add('animation');
@@ -136,7 +154,7 @@ function nidaleeSlide(){
 }
 
 function throwSpear(utilY){
-  if (!gameRunning) return;
+  if (!isGameRunning) return;
   spear.classList.add('spear-animation');
   spearX = nidaleeX;
   spearY = utilY;
@@ -159,13 +177,12 @@ function throwSpear(utilY){
 }
 
 function throwSmoke() {
-
   smoke.classList.remove('hidden');
   smoke.style.transform = `translate3d( ${(smokeX)*pixelSize}px, ${(smokeY)*pixelSize}px, 0)`
 }
 
 function nidaleeAppear(){
-  if (!gameRunning) return;
+  if (!isGameRunning) return;
   nidaleeX = -25;
   nidaleeY = Math.floor(Math.random() * 70);
   nidalee.style.transform = `translate3d( ${nidaleeX*pixelSize}px, ${nidaleeY*pixelSize}px, 0)`
@@ -173,22 +190,22 @@ function nidaleeAppear(){
 }
 
 function gravesSlide(){
-  if (!gameRunning) return;
+  if (!isGameRunning) return;
   setTimeout(() => {
     graves.classList.add('animation');
     graves.style.transform = `translate3d( ${gravesX*pixelSize}px, ${(gravesY-40)*pixelSize}px, 0)`
-    smokeX = Math.floor(Math.random() * 150);
-    smokeY = Math.floor(Math.random() * 60);
     setTimeout(() => {
       graves.classList.remove('animation');
+      smokeX = Math.floor(Math.random() * 150);
+      smokeY = Math.floor(Math.random() * 60);
       throwSmoke(smokeX, smokeY);
       gravesAppear();
     }, 1500);
-  }, 5000);
+  }, 3000);
 }
 
 function gravesAppear(){
-  if (!gameRunning) return;
+  if (!isGameRunning) return;
   gravesX = Math.floor(Math.random() * 170);
   gravesY = 120;
   graves.style.transform = `translate3d( ${gravesX*pixelSize}px, ${gravesY*pixelSize}px, 0)`
@@ -232,7 +249,7 @@ function resetGame(){
 }
 
 function startGame(){
-  gameRunning = true;
+  isGameRunning = true;
   menu.classList.add('hidden');
   placeBlobs();
   nidaleeAppear();
