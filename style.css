@@ -73,13 +73,17 @@ p {
   width: 100%;
 }
 
-.nidalee, .graves {
+.nidalee, .graves, .taliyah {
   width: calc(1.5*var(--grid-cell));
   height: calc(2*var(--grid-cell));
 }
 
 .animation{
   transition: transform 1s ease;
+}
+
+.taliyah-animation {
+  transition: transform 2s linear;
 }
 
 .spear-animation {
@@ -91,6 +95,9 @@ p {
   height: 100%;
 }
 
+.taliyah img {
+  width: 85%;
+}
 
 .character img {
   width: 100%;
@@ -178,6 +185,16 @@ p {
   width: calc(2*var(--grid-cell));
 }
 
+.rock {
+  width: calc(1*var(--grid-cell));
+  height: calc(.2*var(--grid-cell));
+}
+
+.rock img {
+  width: 100%;
+  height: 100%;
+}
+
 .spear img {
  width: 100%;
 }
@@ -229,6 +246,12 @@ p {
 .shot{
   position: absolute;
   top: calc(var(--pixel-size)*30);
+  left: calc(var(--pixel-size)*12);
+}
+
+.rock{
+  position: absolute;
+  top: calc(var(--pixel-size)*20);
   left: calc(var(--pixel-size)*12);
 }
 

@@ -3,8 +3,10 @@ var character = document.querySelector(".character");
 var blobs = document.querySelector(".blobs");
 var nidalee = document.querySelector(".nidalee");
 var graves = document.querySelector(".graves");
+var taliyah = document.querySelector(".taliyah");
 var map = document.querySelector(".map");
 var spear = document.querySelector(".spear");
+var rock = document.querySelector(".rock");
 var shot = document.querySelector(".shot");
 var smoke = document.querySelector(".smoke")
 var score = document.getElementById('score');
@@ -21,8 +23,12 @@ var restartButton = document.getElementById('restartButton');
 
 var characterX = 80;
 var characterY = 35;
+var rockX = 0;
+var rockY = 0;
 var bloobX = 0;
 var bloobY = 0;
+var taliyahX = 0;
+var taliyahY = 0;
 var nidaleeX = 0;
 var nidaleeY = 0;
 var gravesX = 0;
@@ -86,8 +92,6 @@ const placeCharacter = () => {
     character.setAttribute("walking", "false");
   }
 }
-
-  character.setAttribute("walking", held_directions.length>0 ? "true" : "false");
   character.style.transform = `translate3d( ${characterX*pixelSize}px, ${characterY*pixelSize}px, 0)`
 }
 
@@ -99,8 +103,8 @@ function placeBlobs () {
 }
 
 const step = () => {
-  placeCharacter();
-    console.log(held_directions);
+  placeCharacter(); 
+  // console.log(`X: ${characterX} Y: ${characterY}`)
   
   if(!isGameRunning) return;
 
@@ -123,7 +127,7 @@ const step = () => {
 
     if (Math.abs(smokeX-characterX) <= 12 && Math.abs(smokeY - characterY) <= 12 && isGameRunning) {
         map.classList.add('dark')
-        speed = .5;
+        speed = .4;
     } else {
       speed = .7;
       map.classList.remove('dark') 
@@ -212,6 +216,69 @@ function gravesAppear(){
   gravesSlide();
 }
 
+function taliyahAppear() {
+  if(!isGameRunning) return;
+  let random = Math.floor(Math.random() * 2);
+  taliyahX = 195;
+  random>0 ? taliyahY = 0 : taliyahY = 70; 
+  taliyah.style.transform = `translate3d( ${taliyahX*pixelSize}px, ${taliyahY*pixelSize}px, 0)`
+  taliyahSlide(random);
+}
+
+function taliyahSlide(random){
+  if(!isGameRunning) return;
+  setTimeout(() => {
+    taliyah.style.transform = `translate3d( ${(taliyahX-20)*pixelSize}px, ${taliyahY*pixelSize}px, 0)`;
+    taliyah.classList.add('animation');
+    setTimeout(() => {
+      taliyah.classList.remove('animation');
+      taliyah.classList.add('taliyah-animation');
+      if(random===0){
+        taliyah.style.transform = `translate3d( ${(taliyahX-20)*pixelSize}px, ${(taliyahY-70)*pixelSize}px, 0)`;
+        throwRock(random);
+      } else {
+        taliyah.style.transform = `translate3d( ${(taliyahX-20)*pixelSize}px, ${(taliyahY+70)*pixelSize}px, 0)`;
+        throwRock(random);
+      }
+      setTimeout(() => {
+        taliyah.classList.remove('animation');
+        taliyah.classList.remove('taliyah-animation');
+        taliyahAppear();
+      }, 3000);
+    }, 1000)
+  }, 3000);
+}
+
+function throwRock(random) {
+  for(let i=0; i<3; i++){
+    setTimeout(() => {
+      if(random===0) {
+        rockX = taliyahX;
+        rockY = taliyahY;
+        rock.style.transform = `translate3d( ${(rockX-30)*pixelSize}px, ${(rockY-(35*i))*pixelSize}px, 0)`;
+        setTimeout(() => {
+          rock.classList.add('spear-animation');
+          rock.style.transform = `translate3d( ${(rockX-200)*pixelSize}px, ${(rockY-(35*i))*pixelSize}px, 0)`;
+        }, 50);
+        setTimeout(() => {
+          rock.classList.remove('spear-animation');
+        }, 999)
+      } else {
+        rockX = taliyahX;
+        rockY = taliyahY;
+        rock.style.transform = `translate3d( ${(rockX-30)*pixelSize}px, ${(rockY+(35*i))*pixelSize}px, 0)`;
+        setTimeout(() => {
+          rock.classList.add('spear-animation');
+          rock.style.transform = `translate3d( ${(rockX-200)*pixelSize}px, ${(rockY+(35*i))*pixelSize}px, 0)`;
+        }, 50);
+        setTimeout(() => {
+          rock.classList.remove('spear-animation');
+        }, 999)
+      }
+    }, i * 1000)
+  }
+}
+
 document.addEventListener("keydown", (e) => {
   var dir = keys[e.key];
   if (dir && held_directions.indexOf(dir) === -1) {
@@ -254,6 +321,7 @@ function startGame(){
   placeBlobs();
   nidaleeAppear();
   gravesAppear();
+  taliyahAppear();
   step();
   nick.textContent = nickname.value;
 }
