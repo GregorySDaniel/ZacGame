@@ -228,9 +228,11 @@ function taliyahAppear() {
 function taliyahSlide(random){
   if(!isGameRunning) return;
   setTimeout(() => {
+    if(!isGameRunning) return;
     taliyah.style.transform = `translate3d( ${(taliyahX-20)*pixelSize}px, ${taliyahY*pixelSize}px, 0)`;
     taliyah.classList.add('animation');
     setTimeout(() => {
+      if(!isGameRunning) return;
       taliyah.classList.remove('animation');
       taliyah.classList.add('taliyah-animation');
       if(random===0){
@@ -241,6 +243,7 @@ function taliyahSlide(random){
         throwRock(random);
       }
       setTimeout(() => {
+        if(!isGameRunning) return;
         taliyah.classList.remove('animation');
         taliyah.classList.remove('taliyah-animation');
         taliyahAppear();
@@ -258,7 +261,7 @@ function throwRock(random) {
         rock.style.transform = `translate3d( ${(rockX-30)*pixelSize}px, ${(rockY-(35*i))*pixelSize}px, 0)`;
         setTimeout(() => {
           rock.classList.add('spear-animation');
-          rock.style.transform = `translate3d( ${(rockX-200)*pixelSize}px, ${(rockY-(35*i))*pixelSize}px, 0)`;
+          rock.style.transform = `translate3d( ${(rockX-230)*pixelSize}px, ${(rockY-(35*i))*pixelSize}px, 0)`;
         }, 50);
         setTimeout(() => {
           rock.classList.remove('spear-animation');
@@ -269,7 +272,7 @@ function throwRock(random) {
         rock.style.transform = `translate3d( ${(rockX-30)*pixelSize}px, ${(rockY+(35*i))*pixelSize}px, 0)`;
         setTimeout(() => {
           rock.classList.add('spear-animation');
-          rock.style.transform = `translate3d( ${(rockX-200)*pixelSize}px, ${(rockY+(35*i))*pixelSize}px, 0)`;
+          rock.style.transform = `translate3d( ${(rockX-230)*pixelSize}px, ${(rockY+(35*i))*pixelSize}px, 0)`;
         }, 50);
         setTimeout(() => {
           rock.classList.remove('spear-animation');
