@@ -104,37 +104,46 @@ function placeBlobs () {
 
 const step = () => {
   placeCharacter(); 
-  // console.log(`X: ${characterX} Y: ${characterY}`)
-  
+  checkHitbox()
   if(!isGameRunning) return;
 
   window.requestAnimationFrame(()=> {
     step();
-    if (Math.abs(bloobX-characterX) <= 5 && Math.abs(bloobY - characterY) <= 5) {
-      placeBlobs();
-      updateScore();
-    }
-
-    if (Math.abs(spearX-characterX) < 2 && Math.abs(spearY-characterY)<10)  {
-      scoreUser.textContent = `Your score: ${currentScore}`;
-      end.classList.remove('hidden');
-      isGameRunning = false;
-      map.classList.remove('dark') 
-      setTimeout(()=> {
-        restartButton.classList.remove('hidden');
-      }, 3000);
-    }
-
-    if (Math.abs(smokeX-characterX) <= 12 && Math.abs(smokeY - characterY) <= 12 && isGameRunning) {
-        map.classList.add('dark')
-        speed = .4;
-    } else {
-      speed = .7;
-      map.classList.remove('dark') 
-    }
-
-
   })
+}
+
+function endGame() {
+  scoreUser.textContent = `Your score: ${currentScore}`;
+  end.classList.remove('hidden');
+  isGameRunning = false;
+  map.classList.remove('dark') 
+  setTimeout(()=> {
+    restartButton.classList.remove('hidden');
+  }, 5000);
+}
+
+function checkHitbox(){
+  if (Math.abs(bloobX-characterX) <= 5 && Math.abs(bloobY - characterY) <= 5) {
+    placeBlobs();
+    updateScore();
+  }
+
+  if (Math.abs(rockX-characterX) <= 5 && Math.abs(rockY - characterY) < 10) {
+    endGame();
+  }
+
+  if (Math.abs(spearX-characterX) < 2 && Math.abs(spearY-characterY)<10)  {
+    endGame();
+  }
+
+  if (Math.abs(smokeX-characterX) <= 12 && Math.abs(smokeY - characterY) <= 12 && isGameRunning) {
+      map.classList.add('dark')
+      speed = .3;
+  } else {
+    speed = .7;
+    map.classList.remove('dark') 
+  }
+
 }
 
 function updateScore(){
@@ -252,27 +261,32 @@ function taliyahSlide(random){
   }, 3000);
 }
 
-function throwRock(random) {
+function  throwRock(random) {
   for(let i=0; i<3; i++){
     setTimeout(() => {
+      for(let i=0; i<100; i++){
+        setTimeout(()=>{
+          rockX -= 2.3;
+      }, 6*i)
+      }
       if(random===0) {
         rockX = taliyahX;
-        rockY = taliyahY;
-        rock.style.transform = `translate3d( ${(rockX-30)*pixelSize}px, ${(rockY-(35*i))*pixelSize}px, 0)`;
+        rockY = taliyahY - (35*i);
+        rock.style.transform = `translate3d( ${(rockX)*pixelSize}px, ${(rockY)*pixelSize}px, 0)`;
         setTimeout(() => {
           rock.classList.add('spear-animation');
-          rock.style.transform = `translate3d( ${(rockX-230)*pixelSize}px, ${(rockY-(35*i))*pixelSize}px, 0)`;
+          rock.style.transform = `translate3d( ${(rockX-230)*pixelSize}px, ${(rockY)*pixelSize}px, 0)`;
         }, 50);
         setTimeout(() => {
           rock.classList.remove('spear-animation');
         }, 999)
       } else {
         rockX = taliyahX;
-        rockY = taliyahY;
-        rock.style.transform = `translate3d( ${(rockX-30)*pixelSize}px, ${(rockY+(35*i))*pixelSize}px, 0)`;
+        rockY = taliyahY + (35*i);;
+        rock.style.transform = `translate3d( ${(rockX)*pixelSize}px, ${(rockY)*pixelSize}px, 0)`;
         setTimeout(() => {
           rock.classList.add('spear-animation');
-          rock.style.transform = `translate3d( ${(rockX-230)*pixelSize}px, ${(rockY+(35*i))*pixelSize}px, 0)`;
+          rock.style.transform = `translate3d( ${(rockX-230)*pixelSize}px, ${(rockY)*pixelSize}px, 0)`;
         }, 50);
         setTimeout(() => {
           rock.classList.remove('spear-animation');
