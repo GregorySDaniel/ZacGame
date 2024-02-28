@@ -252,7 +252,7 @@ p {
 .rock{
   position: absolute;
   top: calc(var(--pixel-size)*20);
-  left: calc(var(--pixel-size)*12);
+  left: calc(var(--pixel-size)*14);
 }
 
 .dark {
