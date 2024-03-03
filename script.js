@@ -1,3 +1,5 @@
+const url = 'http://localhost:3333';
+
 var pixelSize = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--pixel-size'));
 var character = document.querySelector(".character");
 var blobs = document.querySelector(".blobs");
@@ -19,6 +21,12 @@ var isGameRunning = false;
 var end = document.querySelector(".end");
 var scoreUser = end.querySelector("p");
 var restartButton = document.getElementById('restartButton');
+
+const userData = {
+  name: '',
+  score: 0
+};
+
 
 
 var characterX = 80;
@@ -46,6 +54,15 @@ var held_directions = [];
 
 var speed = .7;
 
+function postUser(userData){
+  axios.post(url, userData)
+    .then(response => {
+      console.log('User data posted successfully:', response.data);
+    })
+    .catch(error => {
+      console.error('Error posting user data:', error);
+    });
+}
 
 const directions = {
   up: "up",
@@ -116,7 +133,13 @@ function endGame() {
   scoreUser.textContent = `Your score: ${currentScore}`;
   end.classList.remove('hidden');
   isGameRunning = false;
-  map.classList.remove('dark') 
+  map.classList.remove('dark')
+  if(currentScore>maxScore){
+    maxScore = currentScore;
+    highScore.textContent = maxScore.toString().padStart(3, '0');
+    userData.score=maxScore;
+    postUser(userData);
+  }
   setTimeout(()=> {
     restartButton.classList.remove('hidden');
   }, 5000);
@@ -312,10 +335,6 @@ document.addEventListener("keyup", (e) => {
 })
 
 function resetGame(){
-  if(currentScore>maxScore){
-    maxScore = currentScore;
-    highScore.textContent = maxScore.toString().padStart(3, '0');
-  }
   end.classList.add('hidden');
   characterX = 80;
   characterY = 35;
@@ -341,4 +360,5 @@ function startGame(){
   taliyahAppear();
   step();
   nick.textContent = nickname.value;
+  userData.name = nickname.value;
 }
