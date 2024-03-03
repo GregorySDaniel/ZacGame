@@ -6,6 +6,7 @@ var blobs = document.querySelector(".blobs");
 var nidalee = document.querySelector(".nidalee");
 var graves = document.querySelector(".graves");
 var taliyah = document.querySelector(".taliyah");
+var leaderboard = document.querySelector(".leaderboard");
 var map = document.querySelector(".map");
 var spear = document.querySelector(".spear");
 var rock = document.querySelector(".rock");
@@ -63,6 +64,30 @@ function postUser(userData){
       console.error('Error posting user data:', error);
     });
 }
+
+function getUser(){
+  axios.get(url)
+  .then(response => {
+
+    leaderboard.innerHTML = '';
+
+    const table = document.createElement('table');
+    const headerRow = table.insertRow();
+    headerRow.innerHTML = '<th>Position</th><th>Name</th><th>Score</th>';
+
+    response.data.forEach((entry, index) => {
+      const row = table.insertRow();
+      row.innerHTML = `<td>${index + 1}</td><td>${entry.name}</td><td>${entry.score}</td>`;
+    });
+
+    leaderboard.appendChild(table);
+  })
+  .catch(error => {
+    console.error('Erro ao obter dados do leaderboard:', error);
+  });
+}
+getUser();
+
 
 const directions = {
   up: "up",

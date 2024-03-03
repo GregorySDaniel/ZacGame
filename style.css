@@ -258,3 +258,24 @@ p {
 .dark {
   filter: brightness(3%);
 }
+
+table {
+  width: 80vw;
+  border-collapse: collapse;
+  margin-bottom: 200px;
+  border: 4px solid rgb(0, 230, 96);;
+}
+
+th, td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
